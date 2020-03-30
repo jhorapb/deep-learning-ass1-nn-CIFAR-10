@@ -263,7 +263,7 @@ def plot_loss(n_epochs, loss_history_train, loss_history_val,
 
     handles, labels = ax1.get_legend_handles_labels()
     fig.legend(handles, labels, loc='upper center')
-    fig.savefig('imgs/graph_case_3.png')
+    fig.savefig('imgs/graph_case_4.png')
     plt.show()
 
 
@@ -281,13 +281,13 @@ def plot_learnt_weight_matrix(W):
         plt.title(class_labels[i])
     # Plot big-sized labeled images
     plt.suptitle('Weigth Matrix Templates')
-    plt.savefig('imgs/labeled_templates_case_3.png')
+    plt.savefig('imgs/labeled_templates_case_4.png')
     plt.show()
     # Plot all images concatenated
     plt.title('Weigth Matrix Templates')
     plt.imshow(np.concatenate(tuple(class_templates), axis=1))
     plt.axis('off')
-    plt.savefig('imgs/templates_case_3.png')
+    plt.savefig('imgs/templates_case_4.png')
     plt.show()
 
 if __name__ == "__main__":
@@ -300,7 +300,7 @@ if __name__ == "__main__":
 
     # Initializing parameters
     W, b = initialize_parameters()
-    GD_params = {'lambda': 0, 'n_epochs': 40, 'n_batch': 100, 'eta': 0.1}
+    GD_params = {'lambda': 1, 'n_epochs': 40, 'n_batch': 100, 'eta': 0.001}
 
     # Running training
     X_train, Y_train, y_train = read_imgs(batch_file_training)
