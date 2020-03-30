@@ -50,8 +50,6 @@ def normalize_distribution(X):
 def initialize_parameters():
     global K, d
     np.random.seed(400)
-    # W = np.random.randn(K, d) * 0.01
-    # b = np.random.randn(K, 1) * 0.01
     W = np.random.normal(loc = 0.0, scale = 0.01, size = (K, d))
     b = np.random.normal(loc = 0.0, scale = 0.01, size = (K, 1))
     return W, b
@@ -296,30 +294,59 @@ if __name__ == "__main__":
     batch_file_validation = data_path + 'data_batch_2'
     batch_file_test = data_path + 'test_batch'
     init_time = time.time()
-    num_data = 100
+    num_data = 10000
 
     # Initializing parameters
     W, b = initialize_parameters()
     GD_params = {'lambda': 1, 'n_epochs': 40, 'n_batch': 100, 'eta': 0.001}
 
-    # Running training
+    # Reading training set
     X_train, Y_train, y_train = read_imgs(batch_file_training)
     # X_train = X_train[:, :num_data]
     # Y_train = Y_train[:, :num_data]
     # y_train = y_train[:num_data]
 
-    # Running validations
+    # Reading validation set
     X_val, Y_val, y_val = read_imgs(batch_file_validation)
     # X_val = X_val[:, :num_data]
     # Y_val = Y_val[:, :num_data]
     # y_val = y_val[:num_data]
 
+    # Reading test set
+    X_test, Y_test, y_test = read_imgs(batch_file_test)
+
+    ########## Block for Gradient Checking ##########
+    #
+    # P = evaluate_classifier(X_train, W, b)
+    # dW, db = compute_gradient(X_train, Y_train, P, W, b, GD_params['lambda'])
+    # dW_center_diff, db_center_diff = ComputeGradsNumSlow(X_train, \
+    #     Y_train, P, W, b, GD_params['lambda'], 1e-6)
+    # dW_finite, db_finite = ComputeGradsNum(X_train, \
+    #     Y_train, P, W, b, GD_params['lambda'], 1e-6)
+
+    # print('Analytical vs Centered Difference:', grad_checking(dW, dW_center_diff, db, db_center_diff))
+    # print('Analytical vs Finite Difference:', grad_checking(dW, dW_finite, db, db_finite))
+    #
+    ########## End of Gradient Checking ##########
+
+    ########## Block for Training and Validation ##########
+    #
+    # Training
     loss_history_train, accuracy_history_train, W_star, b_star = \
         minibatch_gradient_descent(X_train, Y_train, y_train, GD_params, W, b, GD_params['lambda'])
+    # Validation
     loss_history_val, accuracy_history_val, W_star_val, b_star_val = \
         minibatch_gradient_descent(X_val, Y_val, y_val, GD_params, W_star, b_star, GD_params['lambda'])
-    
+    #
+    ########## End of Training and Validation ##########
+
     final_time = time.time()
+    
+    ########## Block for Final Testing ##########
+    #
+    testing_accuracy = compute_accuracy(X_test, y_test, W_star, b_star)
+    #
+    ########## End of Testing ##########
     
     print('Time for training and validating: ', final_time - init_time, 'sec')
     print('Training -> ', 'Initial Loss: ', loss_history_train[0], 'Final Loss: ',
@@ -332,3 +359,5 @@ if __name__ == "__main__":
         accuracy_history_val)
 
     plot_learnt_weight_matrix(W_star)
+    
+    print('Final Accuracy in Testing: ', testing_accuracy)
