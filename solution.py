@@ -136,7 +136,7 @@ def compute_gradient(X, Y, P, W, b, lambda_value):
     return grad_W, grad_b
 
 def ComputeGradsNumSlow(X, Y, P, W, b, lambda_value, h):
-	""" Converted from matlab code """
+	""" Converted from matlab code Andree Hultgren """
 	no 	= 	W.shape[0]
 	d 	= 	X.shape[0]
 
@@ -169,7 +169,7 @@ def ComputeGradsNumSlow(X, Y, P, W, b, lambda_value, h):
 	return grad_W, grad_b
 
 def ComputeGradsNum(X, Y, P, W, b, lambda_value, h):
-	""" Converted from matlab code """
+	""" Converted from matlab code by Andree Hultgren """
 	no 	= 	W.shape[0]
 	d 	= 	X.shape[0]
 
@@ -359,5 +359,5 @@ if __name__ == "__main__":
         accuracy_history_val)
 
     plot_learnt_weight_matrix(W_star)
-    
+
     print('Final Accuracy in Testing: ', testing_accuracy)
