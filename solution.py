@@ -136,7 +136,7 @@ def compute_gradient(X, Y, P, W, b, lambda_value):
     return grad_W, grad_b
 
 def ComputeGradsNumSlow(X, Y, P, W, b, lambda_value, h):
-	""" Converted from matlab code Andree Hultgren """
+	""" Converted from matlab code by Andree Hultgren """
 	no 	= 	W.shape[0]
 	d 	= 	X.shape[0]
 
